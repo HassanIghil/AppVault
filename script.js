@@ -614,23 +614,41 @@ const apps = [
             `).join('');
         }
 
+        // Track active buttons for each filter type
+        let activePlatformButton = null;
+        let activeCategoryButton = null;
+
         function filterPlatform(platform, clickedButton = null) {
-            // If clicking the same button that's already active, set it to 'all'
-            if (currentPlatform === platform && clickedButton) {
-                currentPlatform = 'all';
-                clickedButton.classList.remove('active', 'bg-blue-600', 'text-white');
-                clickedButton.classList.add('bg-gray-800', 'text-gray-300');
-            } else {
-                // Otherwise, set the new platform and update buttons
-                currentPlatform = platform;
-                document.querySelectorAll('.platform-btn').forEach(btn => {
-                    btn.classList.remove('active', 'bg-blue-600', 'text-white');
-                    btn.classList.add('bg-gray-800', 'text-gray-300');
+            if (!clickedButton) return;
+
+            // Handle platform filter buttons
+            if (platform === 'all') {
+                // If "All" is clicked, deactivate all platform filters
+                document.querySelectorAll('.platform-filter .filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
                 });
-                
-                if (clickedButton) {
-                    clickedButton.classList.remove('bg-gray-800', 'text-gray-300');
-                    clickedButton.classList.add('active', 'bg-blue-600', 'text-white');
+                activePlatformButton = null;
+                currentPlatform = 'all';
+            } else {
+                // If clicking the same button that's already active, deactivate it
+                if (activePlatformButton === clickedButton) {
+                    clickedButton.classList.remove('active');
+                    activePlatformButton = null;
+                    currentPlatform = 'all';
+                } else {
+                    // Deactivate previous platform button
+                    if (activePlatformButton) {
+                        activePlatformButton.classList.remove('active');
+                    }
+                    // Activate the new button
+                    clickedButton.classList.add('active');
+                    activePlatformButton = clickedButton;
+                    currentPlatform = platform;
+                }
+                // Deactivate the "All" button
+                const allButton = document.querySelector('.platform-filter .filter-btn[onclick*="\'all\'"]');
+                if (allButton) {
+                    allButton.classList.remove('active');
                 }
             }
             
@@ -638,16 +656,40 @@ const apps = [
         }
 
         function filterCategory(category, clickedButton = null) {
-            currentCategory = category;
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-green-600', 'text-white');
-                btn.classList.add('bg-gray-800', 'text-gray-300');
-            });
-            
-            if (clickedButton) {
-                clickedButton.classList.remove('bg-gray-800', 'text-gray-300');
-                clickedButton.classList.add('active', 'bg-green-600', 'text-white');
+            if (!clickedButton) return;
+
+            // Handle category filter buttons
+            if (category === 'all') {
+                // If "All" is clicked, deactivate all category filters
+                document.querySelectorAll('.category-filter .filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                activeCategoryButton = null;
+                currentCategory = 'all';
+            } else {
+                // If clicking the same button that's already active, deactivate it
+                if (activeCategoryButton === clickedButton) {
+                    clickedButton.classList.remove('active');
+                    activeCategoryButton = null;
+                    currentCategory = 'all';
+                } else {
+                    // Deactivate previous category button
+                    if (activeCategoryButton) {
+                        activeCategoryButton.classList.remove('active');
+                    }
+                    // Activate the new button
+                    clickedButton.classList.add('active');
+                    activeCategoryButton = clickedButton;
+                    currentCategory = category;
+                }
+                // Deactivate the "All" button
+                const allButton = document.querySelector('.category-filter .filter-btn[onclick*="\'all\'"]');
+                if (allButton) {
+                    allButton.classList.remove('active');
+                }
             }
+            
+            applyFilters();
             
             applyFilters();
         }
