@@ -300,7 +300,6 @@
         flex: 0 0 auto !important;
     }
 
-    /* Stats cards mobile adjustments */
     .stats-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 0.4rem !important;
@@ -434,27 +433,27 @@
     }
 }
 
-
 @media (max-width: 640px) {
     #appsGrid button {
-        padding: 0.55rem 0.45rem !important;
-        font-size: 0.75rem !important;
+        padding: 0.55rem 0.45rem !important; 
+        font-size: 0.75rem !important;       
         gap: 0.35rem !important;
         flex-shrink: 0 !important;
-        margin-top: 16px !important;
-        margin-bottom: 5px !important;
+        margin-top: 21px !important;        
+        margin-bottom: 5px !important;       
     }
 }
 
 
+
 @media (max-width: 640px) {
     #appsGrid .absolute.top-3.right-3 span {
-        font-size: 0.6rem !important;
-        padding: 0.18rem 0.4rem !important;
-        border-radius: 0.5rem !important;
+        font-size: 0.6rem !important;       
+        padding: 0.18rem 0.4rem !important; 
+        border-radius: 0.5rem !important;   
     }
 
     #appsGrid .absolute.top-3.right-3 {
-        gap: 0.25rem !important;
+        gap: 0.25rem !important;            
     }
 }
